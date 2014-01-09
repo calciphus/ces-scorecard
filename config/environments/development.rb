@@ -27,5 +27,5 @@ CesScorecard::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  $redis = Redis.new(:host => 'localhost', :port => 6379)
+  ENV["REDISCLOUD_URL"] = "redis://redis@localhost:6379"
 end
