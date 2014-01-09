@@ -18,7 +18,7 @@ class MainController < ApplicationController
 	end
 
 	def about
-
+		redirect_to "http://blog.bradhubbard.net/2014/01/09/ces-scoreboard-playing-with-datasift-and-redis/"
 	end
 
 	def webhook
