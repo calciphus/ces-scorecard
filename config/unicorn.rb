@@ -6,7 +6,7 @@ class MainController < ApplicationController
 	before_filter :initialize_redis
 
 	def index
-		@leader_names = $redis.zrevrange("site_counts",0,19)
+		@leader_names = $redis.zrevrange("site_counts",0,9)
 		@scorelist = Hash.new
 		@series = []
 		@leader_names.each do |leader|
@@ -18,7 +18,6 @@ class MainController < ApplicationController
 	end
 
 	def about
-
 	end
 
 	def webhook
@@ -26,19 +25,4 @@ class MainController < ApplicationController
 		if params[:token] == ENV['SIMPLE_TOKEN']
 			if params[:interactions]
 				params[:interactions].each do |iac|
-					if iac[:links] and iac[:links][:url]
-
-						dom = URI.parse(iac[:links][:url].first).host
-						$redis.zincrby("site_counts", 1, dom)
-					end
-				end
-			end
-		end
-		respond_to do |format|
-			# Respond with success per Datasift documentation
-			format.json{
-				render :json => Hash["success" => true].to_json
-			}
-		end
-	end
-end
+					if i
