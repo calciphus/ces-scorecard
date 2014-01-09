@@ -27,7 +27,7 @@ class MainController < ApplicationController
 			if params[:interactions]
 				params[:interactions].each do |iac|
 					if iac[:links] and iac[:links][:url]
-						dom = URI.parse(iac[:links][:url].first).host rescue ni
+						dom = URI.parse(iac[:links][:url].first).host rescue nil
 						if dom != nil
 							$redis.zincrby("site_counts", 1, dom)
 						end
