@@ -1,6 +1,6 @@
-== README
+# CES Scorecard
 
-So, this has been a fun little project! If you somehow came here first, go check out my [CES Scorecard](http://scorecard.bradhubbard.net)
+So, this has been a fun little project! If you somehow came here first, go check out my [CES Scorecard](http://scorecard.bradhubbard.net). For details on how it works, visit [My blog post about the app](http://blog.bradhubbard.net/2014/01/09/ces-scoreboard-playing-with-datasift-and-redis/)
 
 As I write this we are in the thick of CES 2014 and each year blogs, news organizations, and tech review sites try to publish as many articles they can as fast as they can. I was curious, in all the hurry to publish, which news and blogging sites were actually writing stuff people found informative enough to share. What you're looking at is a bar graph showing how often (in the last few days) various domains have had links to them posted anywhere public on Facebook, Twitter, or Reddit. Each time a new post contains a link, I snag it (more on how in a moment), parse out the domain, and increment a counter in a [Redis Cloud](http://redis-cloud.com/) database. So I'm keeping score of every public post and putting the results up for you to see. 
 
