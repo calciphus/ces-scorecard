@@ -23,11 +23,12 @@ class MainController < ApplicationController
 	def webhook
 		
 		if params[:token] == ENV['SIMPLE_TOKEN']
-
-			params[:interactions].each do |iac|
-				if iac[:links] and iac[:links][:url]
-					dom = URI.parse(iac[:links][:url]).host
-					$redis.zincrby("site_counts", 1, dom)
+			if params[:interactions]
+				params[:interactions].each do |iac|
+					if iac[:links] and iac[:links][:url]
+						dom = URI.parse(iac[:links][:url]).host
+						$redis.zincrby("site_counts", 1, dom)
+					end
 				end
 			end
 		end
