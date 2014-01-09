@@ -8,52 +8,52 @@
 
 <script>
 $(function () {
-        $('#container').highcharts({
-            chart: {
-                type: 'bar'
-            },
+    $('#container').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: "Who's Winning CES 2014 Coverage?"
+        },
+        subtitle: {
+            text: 'Source: DataSift.com'
+        },
+        xAxis: {
+            categories: <%= raw @leader_names -%>,
             title: {
-                text: "Who's Winning CES 2014 Coverage?"
+                text: "Website"
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Number of mentions (Twitter, Facebook, Reddit)',
+                align: 'high'
             },
-            subtitle: {
-                text: 'Source: DataSift.com'
-            },
-            xAxis: {
-                categories: <%= raw @leader_names -%>,
-                title: {
-                    text: "Website"
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' mentions',
+            pointFormat: '{point.y}'
+            
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
                 }
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Number of mentions (Twitter, Facebook, Reddit)',
-                    align: 'high'
-                },
-                labels: {
-                    overflow: 'justify'
-                }
-            },
-            tooltip: {
-                valueSuffix: ' mentions',
-                pointFormat: '{point.y}'
-                
-            },
-            plotOptions: {
-                bar: {
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                showInLegend: false,
-                data: <%= @series -%>
-            }]
-        });
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            showInLegend: false,
+            data: <%= @series -%>
+        }]
+    });
     });
     
 
