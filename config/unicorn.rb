@@ -1,28 +1,22 @@
-class MainController < ApplicationController
-	# Allow non-CSRF posts to the webhook
-	protect_from_forgery :except => [:webhook]
+worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
+timeout 60
+preload_app true
 
-	# Initialize the Redis connection
-	before_filter :initialize_redis
+before_fork do |server, worker|
+  Signal.trap 'TERM' do
+    puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
+    Process.kill 'QUIT', Process.pid
+  end
 
-	def index
-		@leader_names = $redis.zrevrange("site_counts",0,9)
-		@scorelist = Hash.new
-		@series = []
-		@leader_names.each do |leader|
-			lscore = $redis.zscore("site_counts", leader)
-			@series << lscore
-			@scorelist[leader] = lscore
-		end
+  defined?(ActiveRecord::Base) and
+    ActiveRecord::Base.connection.disconnect!
+end
 
-	end
+after_fork do |server, worker|
+  Signal.trap 'TERM' do
+    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
+  end
 
-	def about
-	end
-
-	def webhook
-		
-		if params[:token] == ENV['SIMPLE_TOKEN']
-			if params[:interactions]
-				params[:interactions].each do |iac|
-					if i
+  defined?(ActiveRecord::Base) and
+    ActiveRecord::Base.establish_connection
+end
