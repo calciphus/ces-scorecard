@@ -28,4 +28,5 @@ CesScorecard::Application.configure do
   config.assets.debug = true
 
   ENV["REDISCLOUD_URL"] = "redis://redis@localhost:6379"
+  ENV["SIMPLE_TOKEN"] = "dev_token"
 end

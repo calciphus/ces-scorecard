@@ -15,7 +15,7 @@ class MainController < ApplicationController
   	end
   	respond_to do |format|
   		format.json{
-  			render :json => "OK".to_json
+  			render :json => Hash["success" => true].to_json
   		}
   	end
   end
