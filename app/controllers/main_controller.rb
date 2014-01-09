@@ -15,7 +15,7 @@ class MainController < ApplicationController
 		
 		if params[:token] == ENV['SIMPLE_TOKEN']
 			params[:interactions].each do |iac|
-				puts iac.interaction.link
+				puts iac[:links][:url]
 			end
 		end
 		respond_to do |format|
@@ -25,4 +25,4 @@ class MainController < ApplicationController
 			}
 		end
 	end
-e
+end
