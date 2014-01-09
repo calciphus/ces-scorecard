@@ -1,5 +1,6 @@
 class MainController < ApplicationController
   protect_from_forgery :except => [:webhook]
+  before_filter :initialize_redis
 
   def index
   end
