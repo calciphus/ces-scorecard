@@ -1,4 +1,6 @@
 class MainController < ApplicationController
+  protect_from_forgery :except => [:webhook]
+
   def index
   end
 
@@ -11,8 +13,8 @@ class MainController < ApplicationController
   		puts "Success"
   	end
   	respond_to do |format|
-  		format.js{
-  			render :json => "OK"
+  		format.json{
+  			render :json => "OK".to_json
   		}
   	end
   end
