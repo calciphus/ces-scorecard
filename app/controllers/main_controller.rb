@@ -6,6 +6,15 @@ class MainController < ApplicationController
 	before_filter :initialize_redis
 
 	def index
+		@leader_names = $redis.zrevrange("site_counts",0,9)
+		@scorelist = Hash.new
+		@series = []
+		@leader_names.each do |leader|
+			lscore = $redis.zscore("site_counts", leader)
+			@series << lscore
+			@scorelist[leader] = lscore
+		end
+
 	end
 
 	def about
@@ -14,8 +23,12 @@ class MainController < ApplicationController
 	def webhook
 		
 		if params[:token] == ENV['SIMPLE_TOKEN']
+
 			params[:interactions].each do |iac|
-				puts iac[:links][:url]
+				if iac[:links] and iac[:links][:url]
+					dom = URI.parse(iac[:links][:url]).host
+					$redis.zincrby("site_counts", 1, dom)
+				end
 			end
 		end
 		respond_to do |format|

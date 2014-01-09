@@ -1,2 +1,55 @@
-<h1>Main#index</h1>
-<p>Find me in app/views/main/index.html.erb</p>
+<div id="container"></div>
+<%= link_to "What is this?", about_path -%>
+
+<script>
+$(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: "Who's Winning CSS Coverage?"
+            },
+            subtitle: {
+                text: 'Source: datasift.com'
+            },
+            xAxis: {
+                categories: <%= raw @leader_names -%>,
+                title: {
+                    text: "Website"
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Number of mentions (Twitter, Facebook, Reddit)',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' mentions',
+                pointFormat: '{point.y}'
+                
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                showInLegend: false,
+                data: <%= @series -%>
+            }]
+        });
+    });
+    
+
+</script>
