@@ -1,22 +1,28 @@
 class MainController < ApplicationController
-  protect_from_forgery :except => [:webhook]
-  before_filter :initialize_redis
+	# Allow non-CSRF posts to the webhook
+	protect_from_forgery :except => [:webhook]
 
-  def index
-  end
+	# Initialize the Redis connection
+	before_filter :initialize_redis
 
-  def about
-  end
+	def index
+	end
 
-  def webhook
-  	puts params.to_yaml
-  	if params[:token] == ENV['SIMPLE_TOKEN']
-  		puts "Success"
-  	end
-  	respond_to do |format|
-  		format.json{
-  			render :json => Hash["success" => true].to_json
-  		}
-  	end
-  end
-end
+	def about
+	end
+
+	def webhook
+		
+		if params[:token] == ENV['SIMPLE_TOKEN']
+			params[:interactions].each do |iac|
+				puts iac.interaction.link
+			end
+		end
+		respond_to do |format|
+			# Respond with success per Datasift documentation
+			format.json{
+				render :json => Hash["success" => true].to_json
+			}
+		end
+	end
+e
